@@ -1,0 +1,25 @@
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$host = $_ENV['AZURE_MYSQL_HOST'];
+$dbname = $_ENV['AZURE_MYSQL_DBNAME'];
+$port = $_ENV['AZURE_MYSQL_PORT'];
+$flag = constant($_ENV['AZURE_MYSQL_FLAG']);
+$username = $_ENV['AZURE_MYSQL_USERNAME'];
+$password = $_ENV['AZURE_MYSQL_PASSWORD'];
+
+// Create a database connection using the variables
+$conn = new mysqli($host, $username, $password, $dbname, $port, null, $flag);
+
+// Check if the connection was successful
+if ($conn->connect_error) {
+    die("Failed to connect to MySQL: " . $conn->connect_error);
+} else {
+    echo "Connected successfully";
+}
+
+?>
